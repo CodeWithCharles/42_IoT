@@ -1,0 +1,18 @@
+Vagrant.configure("2") do |config| 
+    config.vm.box = "bento/debian-13" # box de base, lightweight, bento est un projet de packer templates, maintenu par Chef.io
+    config.ssh.insert_key = true # permet la generation de cle ssh
+    config.vm.boot_timeout = 600 # 10 minutes, ca evitera que vagrant abandonne si la VM rame, et ca va ramer (thks sgoinfre)
+    config.ssh.connect_timeout = 120 # 2 minutes, same mais pour la connexion
+
+    # Config du serveur (cpoulainS)
+    # Le sujet conseille les ressources suivantes : 1024 MB de RAM, 1 CPU
+    # Dans la doc, le premier provider annonce est VirtualBox, on s'emmerde pas, on prend VB, c'est supporte
+    config.vm.define "cpoulainS" do |server|
+        server.vm.hostname = "cpoulainS"
+        server.vm.network = "private_network", ip: "192.168.56.110"
+
+        server.vm.provider "virtualbox" do |vb|
+            vb.memory = 1024
+            vb.cpus = 1
+            vb.name = "cpoulainS"
+end
