@@ -12,14 +12,14 @@ check_install()
     local install_cmd=$3
 
     if $command &> /dev/null; then
-        echo -e "${GREEN}[${name^^}] - $name is already installed.${NC}"
+        echo -e "${GREEN}[${name^^}] - ${name,,} is already installed.${NC}"
     else
-        echo -e "${YELLOW}[${name^^}] - $name is not installed. Installing...${NC}"
+        echo -e "${YELLOW}[${name^^}] - ${name,,} is not installed. Installing...${NC}"
         eval $install_cmd
         if [ $? -eq 0 ]; then
-            echo -e "${GREEN}[${name^^}] - $name installed successfully.${NC}"
+            echo -e "${GREEN}[${name^^}] - ${name,,} installed successfully.${NC}"
         else
-            echo -e "${RED}[${name^^}] - Failed to install $name.${NC}"
+            echo -e "${RED}[${name^^}] - Failed to install ${name,,}.${NC}"
             exit 1
         fi
     fi
