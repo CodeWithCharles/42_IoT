@@ -25,15 +25,15 @@ check_command() {
 
     if command -v $cmd &> /dev/null; then
         local version=$($cmd --version 2>&1 | head -n 1)
-        echo -e "${GREEN} : ok${NC} $name est installe"
+        echo -e "${GREEN}ok ==> ${NC} $name est installe"
         echo -e " Version: $version"
         return 0
     else
         if [ "$required" = "true" ]; then
-            echo -e "${RED} : ko${NC} $name n'est pas installe ${RED}(REQUIS)${NC}"
+            echo -e "${RED}ko ==> {NC} $name n'est pas installe ${RED}(REQUIS)${NC}"
             ((ERRORS++))
         else
-            echo -e "${YELLOW} : ko${NC} $name n'est pas installe (optionnel)"
+            echo -e "${YELLOW}ko ==> {NC} $name n'est pas installe (optionnel)"
             ((WARNINGS++))
         fi
         return 1
@@ -42,51 +42,36 @@ check_command() {
 
 # VAGRANT
 
-echo -e "\n${BLUE}[2 / 5] VirtualBox${NC}"
+echo -e "\n${BLUE}[1 / 2] VirtualBox${NC}"
 if command -v vboxmanage &> /dev/null; then
     version=$(vboxmanage --version)
-    echo -e "${GREEN} : ok${NC} VirtualBox est installe"
+    echo -e "${GREEN}ok ==> ${NC} VirtualBox est installe"
     echo -e "  Version: $version"
 
     # est-ce que VB peut lister les VM ? 
     if vboxmanage list vms &> /dev/null; then
-        echo -e "  ${GREEN}: ok${NC}, VirtualBox fonctionne correctement"
+        echo -e "${GREEN}ok ==> ${NC} VirtualBox fonctionne correctement"
     else
-        echo -e "  ${RED}: ko${NC}, VirtualBox semble avoir un probleme"
+        echo -e "${RED}ko ==> ${NC} VirtualBox semble avoir un probleme"
         ((ERRORS++))
     fi
 else
-    echo -e "${RED}: ko${NC} VirtualBox n'est PAS installe ${RED}(REQUIS)${NC}"
+    echo -e "${RED}ko ==> ${NC} VirtualBox n'est PAS installe ${RED}(REQUIS)${NC}"
     ((ERRORS++))
 fi
 
-# KUBECTL
-echo -e "\n${BLUE}[3 / 5] kubectl${NC}"
-check_command "kubectl" "kubectl" "true"
 
 # DOCKER
-echo -e "\n${BLUE}[4 / 5] Docker${NC}"
+echo -e "\n${BLUE}[2 / 2] Docker${NC}"
 if check_command "docker" "Docker" "false"; then
     # docker accessible sans les droits sudo ? 
     if docker ps &> /dev/null; then
-        echo -e "  ${GREEN}: ok${NC} Docker est accessible"
+        echo -e "${GREEN}ok ==> ${NC} Docker est accessible"
     else
         echo -e "  ${YELLOW}: ko${NC}, Docker necessite les droits sudo ou n'est pas demarre sur votre machine"
         echo -e "  Lancez: sudo systemctl start docker"
         echo -e "  Sinon, ajoutez votre user au groupe docker: sudo usermod -aG docker \$USER"
     fi
-fi
-
-# K3S
-
-echo -e "\n${BLUE}[5 / 5] K3s${NC}"
-if command -v k3s &> /dev/null; then
-    echo -e "${YELLOW}: ko${NC}, K3s est installe sur la machine hote"
-    echo -e "  ${YELLOW}: ko${NC}, K3s devrait etre installe uniquement dans les VMS"
-    echo -e "  ${YELLOW}: ko${NC}, pas bloquant dans l'absolu, mais peut expliquer des conflits"
-    ((WARNINGS++))
-else
-    echo -e "${GREEN}: ok${NC} K3s n'est pas installe sur la machine hote"
 fi
 
 # Verification de l'espace disque
@@ -152,10 +137,10 @@ else
 fi
 
 echo -e "\n${BLUE}Commandes utiles:${NC}"
-echo -e "  vagrant up          - Demarrer les VMs"
-echo -e "  vagrant ssh cpoulainS  - Se connecter au serveur"
-echo -e "  vagrant ssh cpoulainSW - Se connecter au worker"
-echo -e "  vagrant status      - Voir l'etat des VMs"
-echo -e "  vagrant destroy -f  - Detruire les VMs"
+echo -e "  vagrant up               - Demarrer les VMs"
+echo -e "  vagrant ssh cpoulainS    - Se connecter au serveur"
+echo -e "  vagrant ssh cpoulainSW   - Se connecter au worker"
+echo -e "  vagrant status           - Voir l'etat des VMs"
+echo -e "  vagrant destroy -f       - Detruire les VMs"
 
 exit $ERRORS
