@@ -14,7 +14,7 @@ BG_BLUE		:=	\033[1;33m
 
 # ---------------------------------- User ------------------------------------ #
 
-USERNAME	:=	$(shell whoami)
+USERNAME	:=	cpoulain
 
 # -------------------------------- Directories ------------------------------- #
 
@@ -28,3 +28,4 @@ SH_DEPS		:=	$(SCRIPTS_DIR)/deps.sh
 SH_DEV		:=	$(SCRIPTS_DIR)/dev.sh
 SH_ARGOCD	:=	$(SCRIPTS_DIR)/argocd.sh
 SH_K3D		:=	$(SCRIPTS_DIR)/k3d.sh
+

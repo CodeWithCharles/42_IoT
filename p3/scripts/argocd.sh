@@ -14,6 +14,7 @@ fi
 # Install and laucnh ArgoCD
 kubectl apply -f ./confs/argocd/namespace.yaml
 kubectl apply -n argocd -f ./confs/argocd/resource.yaml > /dev/null
+kubectl apply -f ./confs/argocd/configmap.yaml > /dev/null
 
 # Wait for ArgoCD server to be ready
 printf "${GREEN}[ARGOCD]${NC} - Waiting for ArgoCD server to be ready...\n"
@@ -28,6 +29,11 @@ while true; do
     fi
 done
 
+# Restart ArgoCD server to apply configuration
+printf "${GREEN}[ARGOCD]${NC} - Restarting ArgoCD server to apply configuration...\n"
+kubectl rollout restart deployment argocd-server -n argocd > /dev/null
+kubectl rollout status deployment argocd-server -n argocd --timeout=60s > /dev/null
+
 # Network settings for ArgoCD server access
 printf "${GREEN}[ARGOCD]${NC} - Setting up network access for ArgoCD server...\n"
 kubectl apply -n argocd -f ./confs/argocd/ingress.yaml
@@ -35,7 +41,6 @@ printf "${GREEN}[ARGOCD]${NC} - Network access setup complete.\n"
 
 # Getting initial admin password
 printf "${GREEN}[ARGOCD]${NC} - Retrieving initial admin password...\n"
-initial_password=$(kubectl -n argocd get secret argocd-initial-admin-secret
-    -o jsonpath="{.data.password}" | base64 -d)
-printf "${GREEN}[ARGOCD]${NC} - login: admin | password: ${YELLOW}$initial_password${NC}\n"
+initial_password=$(kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d)
+printf "${GREEN}[ARGOCD]${NC} - login: admin | password: ${YELLOW}${initial_password}${NC}\n"
 printf "${GREEN}[ARGOCD]${NC} - ArgoCD installation and setup complete and available at: http://localhost/argocd .\n"
