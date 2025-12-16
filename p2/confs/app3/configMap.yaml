@@ -1,43 +1,14 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: app1
-  namespace: default
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: app1
-  template:
-    metadata:
-      labels:
-        app: app1
-    spec:
-      containers:
-        - name: app1
-          image: nginx:alpine
-          ports:
-            - containerPort: 80
-          volumeMounts:
-            - name: html
-              mountPath: /usr/share/nginx/html
-      volumes:
-        - name: html
-          configMap:
-            name: app1-html
-
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: app1-html
+  name: app3-html
   namespace: default
 data:
   index.html: |
     <!DOCTYPE html>
         <html>
         <head>
-            <title>App 1</title>
+            <title>App 3</title>
             <style>
                 body {
                     font-family: Arial, sans-serif;
@@ -62,23 +33,9 @@ data:
         </head>
         <body>
             <div class="container">
-                <h1>🚀 Application 1</h1>
-                <p>Bienvenue sur app1.com</p>
-                <p>Host: app1.com</p>
+                <h1>🚀 Application 3</h1>
+                <p>Bienvenue sur app3.com</p>
+                <p>Host: app3.com</p>
             </div>
         </body>
         </html>
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: app1-service
-  namespace: default
-spec:
-  selector:
-    app: app1
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
