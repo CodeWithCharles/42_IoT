@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app3-html
+  namespace: default
+data:
+  index.html: |
+    <!DOCTYPE html>
+        <html>
+        <head>
+            <title>App 3</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    margin: 0;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                }
+                .container {
+                    text-align: center;
+                    padding: 50px;
+                    background: rgba(255, 255, 255, 0.1);
+                    border-radius: 20px;
+                    backdrop-filter: blur(10px);
+                }
+                h1 { font-size: 4em; margin: 0; }
+                p { font-size: 1.5em; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>🚀 Application 3</h1>
+                <p>Bienvenue sur app3.com</p>
+                <p>Host: app3.com</p>
+            </div>
+        </body>
+        </html>
