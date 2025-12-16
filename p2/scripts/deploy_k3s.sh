@@ -2,7 +2,7 @@
 
 set -e
 
-echo "Attendre que K3s soit pret ..."
+echo "En attente, il faut que K3s soit pret ..."
 while ! kubectl get nodes 2>/dev/null | grep -q "Ready"; do
     sleep 2
 done
