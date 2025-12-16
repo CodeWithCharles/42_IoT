@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║                              CONFIGURATION                                    ║
+# ║                              CONFIGURATION                                   ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 BOX_WIDTH=24
 
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║                           FONCTIONS UTILITAIRES                               ║
+# ║                           FONCTIONS UTILITAIRES                              ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 # Centrer du texte dans une ligne de boîte
@@ -53,11 +53,12 @@ wait_key() {
 
 # Vérifier si les VMs sont en cours d'exécution
 vms_running() {
+    echo "Checking VMs status..."
     vagrant status 2>/dev/null | grep -q "running"
 }
 
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║                              MENU INTERACTIF                                  ║
+# ║                              MENU INTERACTIF                                 ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 # Menu interactif avec navigation clavier
@@ -121,7 +122,7 @@ menu_select() {
 }
 
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║                                 ACTIONS                                       ║
+# ║                                 ACTIONS                                      ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 # Action: Lancer / Gérer les VMs
@@ -140,7 +141,9 @@ action_run() {
 # Action: Détruire les VMs
 action_down() {
     menu_select "Destroy VMs?" \
-        "Yes:make down" \
+        "Yes:make down
+            wait_key
+            return" \
         "No:return"
 }
 
@@ -157,7 +160,7 @@ action_ssh() {
 }
 
 # ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║                                   MAIN                                        ║
+# ║                                   MAIN                                       ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
 main() {
