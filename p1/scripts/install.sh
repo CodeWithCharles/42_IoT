@@ -40,7 +40,6 @@ check_command() {
     fi
 }
 
-# VAGRANT
 
 echo -e "\n${BLUE}[1 / 2] VirtualBox${NC}"
 if command -v vboxmanage &> /dev/null; then
@@ -128,7 +127,7 @@ echo -e "${BLUE}================================================${NC}"
 if [ $ERRORS -eq 0 ] && [ $WARNINGS -eq 0 ]; then
     echo -e "${GREEN}✓ Tout est OK !${NC} Vous pouvez lancer 'vagrant up'"
 elif [ $ERRORS -eq 0 ]; then
-    echo -e "${YELLOW}⚠ ${WARNINGS} avertissement(s)${NC} - Le projet devrait fonctionner"
+    echo -e "${YELLOW}⚠ ${WARNINGS} avertissement(s)${NC} - Le projet devrait fonctionner glhf pour debug"
     echo -e "  Vous pouvez lancer 'vagrant up'"
 else
     echo -e "${RED}✗ ${ERRORS} erreur(s) bloquante(s)${NC}"

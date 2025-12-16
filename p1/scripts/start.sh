@@ -109,11 +109,7 @@ menu_select() {
             '')  # Entrée
                 local func="${options[$selected]#*:}"
                 clear
-                if [[ "$func" == "return" ]]; then
-                    return 0
-                fi
                 eval "$func"
-                # wait_key
                 ;;
             'q'|'Q'|$'\x7f')  # Quitter / Backspace
                 tput cnorm
@@ -132,7 +128,8 @@ menu_select() {
 action_run() {
     if vms_running; then
         menu_select "VMs running" \
-            "Status:make status" \
+            "Status:make status
+                    wait_key" \
             "SSH:action_ssh" \
             "Back:return"
     else
