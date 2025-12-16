@@ -25,6 +25,8 @@ clean:
 
 fclean: clean
 	@sudo kubectl delete pods -n argocd --all
+	@sudo kubectl delete pods -n dev --all
+	@sudo kubectl delete pods -n gitlab --all
 	@sudo docker system prune -af --volumes
 	@sudo k3d cluster delete $(USERNAME)
 	@rm -rf /tmp/42_IoT_Playground_cpoulain

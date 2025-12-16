@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gitlab
-  name:space: gitlab
+  namespace: gitlab
 spec:
   replicas: 1
   selector:
@@ -28,13 +28,16 @@ spec:
           value: |
             external_url 'http://localhost/gitlab'
             gitlab_rails['gitlab_relative_url_root'] = "/gitlab"
+            gitlab_rails['initial_root_password'] = 'password123'
+            nginx['listen_port'] = 80
+            nginx['listen_https'] = false
         resources:
           requests:
-            memory: "1024Mi"
-            cpu: "500m"
+            memory: "4Gi"
+            cpu: "2000m"
           limits:
-            memory: "2048Mi"
-            cpu: "1000m"
+            memory: "8Gi"
+            cpu: "4000m"
       volumes:
       - name: gitlab-storage
         persistentVolumeClaim:

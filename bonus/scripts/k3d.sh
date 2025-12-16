@@ -19,7 +19,7 @@ if k3d cluster list | grep -q "$USERNAME"; then
     printf "${YELLOW}[K3D]${NC} - k3d cluster for user ${USERNAME} already exists. Skipping creation.\n"
     exit 1
 else
-    if ! sudo k3d cluster create $USERNAME --port 80:80@loadbalancer --servers 1 --agents 3; then
+    if ! sudo k3d cluster create $USERNAME --port 80:80@loadbalancer --servers 1 --agents 1; then
         printf "${RED}[K3D] - Failed to create k3d cluster for user ${USERNAME}.\nIs K3D install ? Is docker service running ?${NC}\n"
         exit 1
     fi

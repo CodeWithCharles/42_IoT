@@ -22,12 +22,12 @@ kubectl apply -n gitlab -f ./confs/gitlab/service.yaml > /dev/null
 # --------------------- Wait for gitlab pods to be ready --------------------- #
 printf "${GREEN}[GITLAB]${NC} - Waiting for GitLab pods to be ready...\n"
 while true; do
-    status=$(kubectl -n gitlab get pods -l app=gitlab -o jsonpath="{.items[0].status.phase}")
-    if [ "$status" == "Running" ]; then
+    status=$(sudo kubectl get pods -n gitlab --field-selector=status.phase=Running 2>/dev/null | grep -c "gitlab")
+    if [ "$status" -eq "1" ]; then
         printf "${GREEN}[GITLAB]${NC} - GitLab pods are running.\n"
         break
     else
-        printf "${YELLOW}[GITLAB]${NC} - GitLab pod status: $status. Waiting...\n"
+        printf "${YELLOW}[GITLAB]${NC} - GitLab pod status: $status/1. Waiting...\n"
         sleep 5
     fi
 done
