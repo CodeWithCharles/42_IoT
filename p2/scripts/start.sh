@@ -173,6 +173,24 @@ action_ssh() {
         "Back:return"
 }
 
+action_curl_app() {
+    if ! vms_running; then
+        echo "No VMs are running. Please start the VMs first."
+        return
+    fi
+    menu_select "Select App to curl" \
+        "App1:make curl-app1
+            wait_key
+            return" \
+        "App2:make curl-app2
+            wait_key
+            return" \
+        "App3:make curl-app3
+            wait_key
+            return" \
+        "Back:return"
+}
+
 # ╔══════════════════════════════════════════════════════════════════════════════╗
 # ║                                   MAIN                                       ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
@@ -183,6 +201,7 @@ main() {
         "Down:action_down" \
         "SSH:action_ssh" \
         "Show Nodes:action_k_get" \
+        "Curl App:action_curl_app" \
         "Exit:return"
 }
 

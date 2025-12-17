@@ -22,6 +22,15 @@ clean:
 fclean: down clean
 	rm -rf .vagrant
 
+curl-app1:
+	curl -H 'HOST:app1.com' http://192.168.56.110
+
+curl-app2:
+	curl -H 'HOST:app2.com' http://192.168.56.110
+
+curl-app3:
+	curl -H 'HOST:app3.com' http://192.168.56.110
+
 # Rebuild everything
 re: fclean all
 

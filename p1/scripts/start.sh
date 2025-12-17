@@ -125,6 +125,16 @@ menu_select() {
 # ║                                 ACTIONS                                      ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
+shownodes() {
+    if ! vms_running; then
+        echo "No VMs are running. Please start the VMs first."
+        wait_key
+        return
+    fi
+    vagrant ssh cpoulainS -c "kubectl get nodes -o wide"
+    wait_key
+}
+
 # Action: Lancer / Gérer les VMs
 action_run() {
     if vms_running; then
@@ -169,6 +179,7 @@ main() {
         "Run:action_run" \
         "Down:action_down" \
         "SSH:action_ssh" \
+        "Show Nodes:shownodes"  \
         "Exit:return"
 }
 main
