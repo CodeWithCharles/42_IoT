@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gitlab-ingress
+  labels:
+    app: gitlab
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+    traefik.ingress.kubernetes.io/router.priority: "100"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /gitlab
+        pathType: Prefix
+        backend:
+          service:
+            name: gitlab-service
+            port:
+              number: 80
