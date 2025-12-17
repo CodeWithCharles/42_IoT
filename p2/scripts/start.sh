@@ -125,6 +125,21 @@ menu_select() {
 # ║                                 ACTIONS                                      ║
 # ╚══════════════════════════════════════════════════════════════════════════════╝
 
+nodes_status() {
+    vagrant status cpoulainS 
+}
+
+# Action: kubectl get nodes (alias kgn)
+action_kgn() {
+    if ! vms_running; then
+        echo "No VMs are running. Please start the VMs first."
+        wait_key
+        return
+    fi
+    vagrant ssh cpoulainS -c "kubectl get nodes"
+    wait_key
+}
+
 # Action: Lancer / Gérer les VMs
 action_run() {
     if vms_running; then
@@ -134,14 +149,15 @@ action_run() {
             "SSH:action_ssh" \
             "Back:return"
     else
-        make up
+        eval "make up
+            wait_key"
     fi
 }
 
 # Action: Détruire les VMs
 action_down() {
     menu_select "Destroy VMs?" \
-        "Yes:make down
+        "Yes:make fclean
             wait_key
             return" \
         "No:return"
@@ -167,6 +183,7 @@ main() {
         "Run:action_run" \
         "Down:action_down" \
         "SSH:action_ssh" \
+        "Nodes (kgn):action_kgn" \
         "Exit:return"
 }
 

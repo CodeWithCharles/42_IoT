@@ -100,7 +100,7 @@ menu_select() {
         read -rsn1 key
         
         case "$key" in
-            $'\x1b')  # Flèches directionnelles
+            $'\x1b')            # Flèches directionnelles
                 read -rsn2 key
                 case "$key" in
                     '[A') ((selected--)); [[ $selected -lt 0 ]] && selected=$((count - 1)) ;;
@@ -112,7 +112,7 @@ menu_select() {
                 clear
                 eval "$func"
                 ;;
-            'q'|'Q'|$'\x7f')  # Quitter / Backspace
+            'q'|'Q'|$'\x7f')    # Quitter / Backspace
                 tput cnorm
                 clear
                 return 0
@@ -134,14 +134,15 @@ action_run() {
             "SSH:action_ssh" \
             "Back:return"
     else
-        make up
+        eval "make up
+            wait_key"
     fi
 }
 
 # Action: Détruire les VMs
 action_down() {
     menu_select "Destroy VMs?" \
-        "Yes:make down
+        "Yes:make fclean
             wait_key
             return" \
         "No:return"
@@ -170,6 +171,4 @@ main() {
         "SSH:action_ssh" \
         "Exit:return"
 }
-
-# Lancer le programme
 main
