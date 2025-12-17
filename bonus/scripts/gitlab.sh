@@ -54,4 +54,4 @@ echo "$password" > .gitlab_password
 
 # ------------------------------- Final output ------------------------------- #
 echo "gitlab available at: http://localhost/gitlab"
-echo "login: admin, password: $password"
+echo "login: root, password: $password"

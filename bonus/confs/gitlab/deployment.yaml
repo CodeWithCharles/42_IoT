@@ -28,7 +28,6 @@ spec:
           value: |
             external_url 'http://localhost/gitlab'
             gitlab_rails['gitlab_relative_url_root'] = "/gitlab"
-            gitlab_rails['initial_root_password'] = 'password123'
             nginx['listen_port'] = 80
             nginx['listen_https'] = false
         resources:
