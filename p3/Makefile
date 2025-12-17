@@ -45,12 +45,12 @@ fetch-dev:
 	@curl http://localhost
 
 switch-v1:
-	@cd /tmp/42_IoT_Playground_cpoulain && sudo sed -i 's/wil42\/playground\:v2/wil42\/playground\:v1/g' manifests/deployment.yaml && \
-	sudo git add . && sudo git commit -a -m "v1" && sudo git push;
+	@cd ~/42_IoT_Playground_cpoulain && sudo sed -i 's/wil42\/playground\:v2/wil42\/playground\:v1/g' manifests/deployment.yaml && \
+	git add . && git commit -a -m "v1" && git push;
 
 switch-v2:
-	@cd /tmp/42_IoT_Playground_cpoulain && sudo sed -i 's/wil42\/playground\:v1/wil42\/playground\:v2/g' manifests/deployment.yaml && \
-	sudo git add . && sudo git commit -a -m "v2" && sudo git push;
+	@cd ~/42_IoT_Playground_cpoulain && sudo sed -i 's/wil42\/playground\:v1/wil42\/playground\:v2/g' manifests/deployment.yaml && \
+	git add . && git commit -a -m "v2" && git push;
 
 .PHONY: all up clean fclean k-get-ns k-get-pods k-get-pods-dev \
 		k-get-pods-argocd fetch-dev switch-v1 switch-v2
