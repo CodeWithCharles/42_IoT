@@ -24,8 +24,9 @@ CONFS_DIR	:=	$(BASE_DIR)/confs
 
 # ---------------------------------- Scripts --------------------------------- #
 
-SH_DEPS		:=	$(SCRIPTS_DIR)/deps.sh
+SH_DEPS		:=	$(SCRIPTS_DIR)/install-dependencies.sh
 SH_DEV		:=	$(SCRIPTS_DIR)/dev.sh
 SH_ARGOCD	:=	$(SCRIPTS_DIR)/argocd.sh
+SH_GITLAB	:=	$(SCRIPTS_DIR)/gitlab.sh
 SH_K3D		:=	$(SCRIPTS_DIR)/k3d.sh
 
